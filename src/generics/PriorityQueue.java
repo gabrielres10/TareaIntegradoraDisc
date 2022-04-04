@@ -1,7 +1,7 @@
 package generics;
 
 public class PriorityQueue<V> {
-	PriorityNode<V> head;
+	private PriorityNode<V> head;
 	int size;
 
 	/**
@@ -10,6 +10,10 @@ public class PriorityQueue<V> {
 	public PriorityQueue() {
 		this.head = null;
 		this.size = 0;
+	}
+	
+	public void setHead(PriorityNode<V> head) {
+		this.head = head;
 	}
 	
 	/**
@@ -36,8 +40,10 @@ public class PriorityQueue<V> {
 		int c = 0;
 		PriorityNode<V> temp = head;
 		while (c < index) {
-			temp = temp.getNext();
-			c++;
+			if(temp != null) {
+				temp = temp.getNext();
+				c++;
+			}
 		}
 		return temp != null ? temp : null;
 	}
@@ -119,27 +125,52 @@ public class PriorityQueue<V> {
 		} else {
 			PriorityNode<V> temp = head;
 			PriorityNode<V> newNode = new PriorityNode<>(value, priority);
+			if(temp.getPriority()>newNode.getPriority()) {
+				newNode.linkNext(temp);
+			}else {
+				
+			}
 			newNode.linkNext(temp);
 			this.head = newNode;
 		}
-		
-		update();
 		this.size++;
+		update();
 	}
-
-	private void update() {
-		PriorityNode<V> temp = head;
-		
-		boolean flag = false;
-		while(!false) {
-			if(temp.getPriority()<temp.getNext().getPriority()) {
-				
+	
+	/**
+	 * This method gets the node with the lowest priority
+	 * @return LowestPriority, PriorityNode<V>, this is the lowest priority
+	 */
+	public int getLowestPriority() {
+		PriorityNode<V> lowestPriority = getNode(0);
+		int lowestIndex = 0;
+		for(int i = 0; i<size; i++) {
+			PriorityNode<V> comparablePriority = getNode(i);
+			if(comparablePriority != null && lowestPriority.getPriority() < comparablePriority.getPriority()) {
+				lowestPriority = comparablePriority;
+				lowestIndex = i;
 			}
 		}
-		
+		return lowestIndex;
 	}
 
+	
+	public void update() {
+		PriorityQueue<V> temp = new PriorityQueue<>();
+		temp.setHead(head);
+		PriorityNode<V> newNode = getNode(getLowestPriority());
+		if(newNode.getNext() != null) {
+			newNode.getNext().deleteNext();
+		}
+		
+		for(int i = 0; i<size; i++) {
+			newNode.linkNext(temp.getNode(getLowestPriority()));
+		}
+		head = newNode;
+	}
+	
 	public int size() {
 		return size;
 	}
+	
 }

@@ -1,6 +1,8 @@
 package ui;
 
 import java.util.Scanner;
+
+import generics.PriorityQueue;
 import model.BuildingSystem;
 
 /**
@@ -24,7 +26,6 @@ public class DiscreetGuys{
 	 **/
 	public static void main(String[] args) {
 		DiscreetGuys dg = new DiscreetGuys();
-
 		System.out.println("Starting app...");
 		int N = dg.askForNumberOfBuildings();
 

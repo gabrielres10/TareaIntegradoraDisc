@@ -15,6 +15,12 @@ public class PriorityNode <V> {
 		this.next = n;
 	}
 	
+	public void deleteNext() {
+		if(next != null) {
+			next = null;
+		}
+	}
+	
 	public void updatePriority(int priority) {
 		this.priority = this.priority + priority;
 	}
@@ -33,5 +39,9 @@ public class PriorityNode <V> {
 
 	public void setValue(V value) {
 		this.value = value;
+	}
+	
+	public String toString() {
+		return "Prioridad = " + priority;
 	}
 }
