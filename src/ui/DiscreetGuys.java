@@ -2,7 +2,6 @@ package ui;
 
 import java.util.Scanner;
 
-import generics.PriorityQueue;
 import model.BuildingSystem;
 
 /**
